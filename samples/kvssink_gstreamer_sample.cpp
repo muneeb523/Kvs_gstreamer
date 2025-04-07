@@ -809,7 +809,7 @@ int main(int argc, char *argv[])
 {
     std::string device = "/dev/video2"; // Change this to your video device
     std::string file_path = "file.mp4"; // Path to save the output file
-    PropertyConfigurator::doConfigure("../kvs_log_configuration");
+    PropertyConfigurator::doConfigure("kvs_log_configuration");
 
     signal(SIGINT, sigint_handler);
 
