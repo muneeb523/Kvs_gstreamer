@@ -1,0 +1,2 @@
+amazon-kvs-producer-sdk-cpp-deps.patch -p1
+global-thread-sleep-linkerror.patch -p1

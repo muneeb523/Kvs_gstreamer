@@ -94,12 +94,15 @@ set(BUILD_COMMON_LWS
 set(BUILD_COMMON_CURL
     TRUE
     CACHE BOOL "Build ProducerC with CURL Support" FORCE)
+if(BUILD_DEPENDENCIES)
 set(DEPENDENCY_DOWNLOAD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/dependency)
 if(NOT EXISTS ${DEPENDENCY_DOWNLOAD_PATH})
   file(MAKE_DIRECTORY ${DEPENDENCY_DOWNLOAD_PATH})
 endif()
 fetch_repo(kvscproducer)
 add_subdirectory(${DEPENDENCY_DOWNLOAD_PATH}/libkvscproducer/kvscproducer-src EXCLUDE_FROM_ALL)
+
+endif()
 
 ############# find dependent libraries ############
 
@@ -221,10 +224,20 @@ if(BUILD_GSTREAMER_PLUGIN)
   endif()
   target_link_libraries(gstkvssink PRIVATE ${GST_APP_LIBRARIES} KinesisVideoProducer)
 
-  add_executable(FlashLight_H265 samples/FlashLight_H265.cpp)
-  target_link_libraries(FlashLight_H265 ${GST_APP_LIBRARIES} KinesisVideoProducer kvspic)
+  add_executable(kvssink_gstreamer_sample samples/kvssink_gstreamer_sample.cpp)
+  target_link_libraries(kvssink_gstreamer_sample ${GST_APP_LIBRARIES} KinesisVideoProducer kvspic)
 
- 
+  add_executable(kvs_gstreamer_sample samples/kvs_gstreamer_sample.cpp)
+  target_link_libraries(kvs_gstreamer_sample ${GST_APP_LIBRARIES} KinesisVideoProducer kvspic)
+
+  add_executable(kvs_gstreamer_multistream_sample samples/kvs_gstreamer_multistream_sample.cpp)
+  target_link_libraries(kvs_gstreamer_multistream_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
+
+  add_executable(kvs_gstreamer_audio_video_sample samples/kvs_gstreamer_audio_video_sample.cpp)
+  target_link_libraries(kvs_gstreamer_audio_video_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
+
+  add_executable(kvs_gstreamer_file_uploader_sample samples/kvs_gstreamer_file_uploader_sample.cpp)
+  target_link_libraries(kvs_gstreamer_file_uploader_sample ${GST_APP_LIBRARIES})
 endif()
 
 if(BUILD_TEST)
